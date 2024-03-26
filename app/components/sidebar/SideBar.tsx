@@ -7,11 +7,10 @@ import SideBarDivider from "./SideBarDivider";
 
 export default function SideBar() {
     return (
-        <div className="w-16 flex flex-col shadow-lg">
-            <div className="fixed top-0 left-0 bg-slate-700 w-16">
-                <SideBarIcon icon={<FaHome size="28" />} tooltip="Home"/>
-                <SideBarDivider />
-                <SideBarIcon icon={<FaRss size="32" />} tooltip="RSS" />
+        <div className="w-12 flex flex-col">
+            <div className="fixed top-0 left-0 w-12 bg-stone-600">
+                <SideBarIcon icon={<FaHome size="28" color="white" />} tooltip="Home"/>
+                <SideBarIcon icon={<FaRss size="28" color="white" />} tooltip="RSS" />
             </div>            
         </div>
     )
