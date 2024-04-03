@@ -1,7 +1,9 @@
+'use client'
+
 import SideBar from "../sidebar/SideBar";
 import ContentContainer from "./ContentContainer";
-import FeedItemsContainer from "./FeedItemsContainer";
-import FeedsContainer from "./FeedsContainer";
+import FeedItemsContainer from "./FeedsContainerV2";
+import FeedsContainerV1 from "./FeedsContainerV1";
 
 export default function RSSApplication() {
     return (
@@ -12,7 +14,7 @@ export default function RSSApplication() {
             </div>
             <div className="flex flex-col w-[325px] w-min-[220px] h-full bg-stone-700 
             box-border border-r border-r-slate-100">
-                <FeedsContainer />
+                <FeedsContainerV1 />
             </div>
             <div className="flex flex-col w-[325px] w-min-[220px] h-full bg-stone-800
             box-border border-r border-r-slate-100">

@@ -1,3 +1,5 @@
+'use client'
+
 import TopNavigation from "../topnav/TopNavigation";
 import ContentItem from "./ContentItem";
 
