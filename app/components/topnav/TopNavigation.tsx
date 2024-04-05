@@ -21,7 +21,7 @@ const UserCircle = () => {
 export default function TopNavigation() {
     return (
         <div className="flex flex-row items-center bg-opacity-90 
-        w-full h-12 h-min-12 m-0 border-b border-b-slate-100">
+        w-full h-12 min-h-12 m-0 border-b border-b-slate-100">
             <Title />
             <UserCircle />
         </div>

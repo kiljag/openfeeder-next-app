@@ -6,16 +6,18 @@ type FeedStatus = "idle" | "loading" | "succeeded" | "failed"
 
 interface FeedState {
     feeds: RssFeed[],
-    feedIdSelected: number,
+    feedSelected: RssFeed | null,
     feedItemsMap: Record<number, RssFeedItem[]>,
+    feedItemSelected: RssFeedItem | undefined,
     status: FeedStatus,
     error: string | null,
 }
 
 const initialState : FeedState = {
     feeds: [],
-    feedIdSelected: -1,
+    feedSelected: null,
     feedItemsMap: {},
+    feedItemSelected: undefined,
     status: "idle",
     error: null,
 }
@@ -29,6 +31,10 @@ interface SetFeedsPayload {
 interface SetFeedItemsPayload {
     feedId: number,
     feedItems: RssFeedItem[],
+}
+
+interface SetFeedItemSelectedPayload {
+    feedId: number,
 }
 
 export const feedSlice = createSlice({
@@ -45,26 +51,31 @@ export const feedSlice = createSlice({
         setFeedsStatus: (state, action: PayloadAction<FeedStatus>) => {
             state.status = action.payload;
         },
-        setFeedSelected: (state, action: PayloadAction<number>) => {
-            state.feedIdSelected = action.payload;
+        setFeedSelected: (state, action: PayloadAction<RssFeed>) => {
+            state.feedSelected = action.payload;
         },
         setFeedItems: (state, action: PayloadAction<SetFeedItemsPayload>) => {
             state.feedItemsMap[action.payload.feedId] = action.payload.feedItems;
+        },
+        setFeedItemSelected: (state, action: PayloadAction<RssFeedItem>) => {
+            state.feedItemSelected = action.payload;
         }
     }
 })
 
 // export reducer action builders
-export const {setFeeds, setFeedsStatus, setFeedSelected, setFeedItems} = feedSlice.actions
+export const {setFeeds, setFeedsStatus,
+    setFeedSelected, setFeedItems, setFeedItemSelected} = feedSlice.actions
 
 // export selectors
 export const selectFeeds = (state : RootState) => state.feeds.feeds;
-export const selectFeedIdSelected = (state : RootState) => state.feeds.feedIdSelected;
-export const selectFeedSelected = (state : RootState) => {
-    return state.feeds.feeds.find(feed => feed.id == state.feeds.feedIdSelected)
-} 
-export const selectFeedItems = (state : RootState) => state.feeds.feedItemsMap[state.feeds.feedIdSelected];
+export const selectFeedSelected = (state : RootState) => state.feeds.feedSelected;
+export const selectFeedItems = (state : RootState) => {
+    if (state.feeds.feedSelected) return state.feeds.feedItemsMap[state.feeds.feedSelected.id];
+    else return [];
+}
 export const selectFeedStatus = (state : RootState) => state.feeds.status;
+export const selectFeedItemSelected = (state: RootState) => state.feeds.feedItemSelected;
 
 // export feeds reducer
 export default feedSlice.reducer

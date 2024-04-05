@@ -1,7 +1,7 @@
 import axios from "axios";
 import { RssFeed, RssFeedItem } from "../types/rss";
 import { store } from "../redux/store";
-import { setFeeds, setFeedItems, setFeedsStatus } from "../redux/feedsSlice";
+import { setFeeds, setFeedItems, setFeedsStatus, setFeedItemSelected } from "../redux/feedsSlice";
 
 export function fetchFeeds() {
 
@@ -55,5 +55,21 @@ export function fetchFeedItems(feedId: number) {
             feedId: feedId,
             feedItems: [],
         }))
+    })
+}
+
+export function fetchFeedItemContent(feedId: number, feedItemId: number) {
+    let url = process.env.NEXT_PUBLIC_API_SERVER + `/feeds/${feedId}/${feedItemId}`
+    axios.get<any>(url).then(res => {
+        let feedItem: RssFeedItem = {
+            id: res.data['Id'],
+            feedId: feedId,
+            title: res.data['Title'],
+            link: res.data['Link'],
+            description: res.data['Description']
+        }
+        store.dispatch(setFeedItemSelected(feedItem))
+    }).catch(err => {
+        console.error(err);
     })
 }
