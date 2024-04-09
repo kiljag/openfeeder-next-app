@@ -32,7 +32,7 @@ export function fetchFeeds() {
 }
 
 export function fetchFeedItems(feedId: number) {
-    let url = process.env.NEXT_PUBLIC_API_SERVER + `/feeds/${feedId}`
+    let url = process.env.NEXT_PUBLIC_API_SERVER + `/feedItems/${feedId}`
     axios.get<any[]>(url).then(res => {
         let feedItems: RssFeedItem[] = []
         console.log("feedItems response : ", res.data);
@@ -59,7 +59,7 @@ export function fetchFeedItems(feedId: number) {
 }
 
 export function fetchFeedItemContent(feedId: number, feedItemId: number) {
-    let url = process.env.NEXT_PUBLIC_API_SERVER + `/feeds/${feedId}/${feedItemId}`
+    let url = process.env.NEXT_PUBLIC_API_SERVER + `/feedItem/${feedId}/${feedItemId}`
     axios.get<any>(url).then(res => {
         let feedItem: RssFeedItem = {
             id: res.data['Id'],
