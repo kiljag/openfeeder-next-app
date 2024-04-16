@@ -3,14 +3,14 @@ export interface RssFeed {
     id: number,
     title: string,
     url: string,
-    description: string | null,
+    description: string,
 }
 
 export interface RssFeedItem {
     id: number,
     feedId: number,
     title: string,
-    description: string | null,
+    description: string,
     link: string,
     pubDate?: string,
 }

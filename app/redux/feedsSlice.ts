@@ -37,6 +37,11 @@ interface SetFeedItemSelectedPayload {
     feedId: number,
 }
 
+interface AdddNewFeedPayload {
+    feed: RssFeed,
+    items: RssFeedItem[]
+}
+
 export const feedSlice = createSlice({
     name: "feeds",
     initialState, 
@@ -59,13 +64,22 @@ export const feedSlice = createSlice({
         },
         setFeedItemSelected: (state, action: PayloadAction<RssFeedItem>) => {
             state.feedItemSelected = action.payload;
+        },
+        addNewFeed: (state, action: PayloadAction<AdddNewFeedPayload>) => {
+            state.feeds = [action.payload.feed, ...state.feeds]
+            state.feedItemsMap[action.payload.feed.id] = action.payload.items
+            state.feedSelected = action.payload.feed
+        },
+        removeFeed: (state, action: PayloadAction<number>) => {
+            state.feeds = state.feeds.filter(f => f.id !== action.payload)
+            state.feedSelected = null
         }
     }
 })
 
 // export reducer action builders
 export const {setFeeds, setFeedsStatus,
-    setFeedSelected, setFeedItems, setFeedItemSelected} = feedSlice.actions
+    setFeedSelected, setFeedItems, setFeedItemSelected, addNewFeed, removeFeed} = feedSlice.actions
 
 // export selectors
 export const selectFeeds = (state : RootState) => state.feeds.feeds;
